@@ -1,5 +1,5 @@
 {
-  "name": "su-sortable-tree-theme",
+  "name": "@sensorup/su-sortable-tree-theme",
   "version": "1.0.0",
   "description": "Customized theme for react-sortable-tree",
   "scripts": {
