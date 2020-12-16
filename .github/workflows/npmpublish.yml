@@ -1,6 +1,9 @@
 name: Npm Gpr Publish
 
-on: push
+on:
+  push:
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
 
 jobs:
   build:
