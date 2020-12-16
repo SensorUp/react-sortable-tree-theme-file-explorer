@@ -1,7 +1,7 @@
 {
-  "name": "react-sortable-tree-theme-file-explorer",
-  "version": "2.0.0",
-  "description": "File explorer theme for react-sortable-tree",
+  "name": "su-sortable-tree-theme",
+  "version": "1.0.0",
+  "description": "Customized theme for react-sortable-tree",
   "scripts": {
     "build": "npm run clean && cross-env NODE_ENV=production TARGET=umd webpack --bail",
     "build:demo": "npm run clean:demo && cross-env NODE_ENV=production TARGET=demo webpack --bail",
@@ -19,13 +19,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/frontend-collective/react-sortable-tree-theme-file-explorer"
+    "url": "https://github.com/SensorUp/su-sortable-tree-theme"
   },
-  "homepage": "https://github.com/frontend-collective/react-sortable-tree-theme-file-explorer",
-  "bugs": "https://github.com/frontend-collective/react-sortable-tree-theme-file-explorer/issues",
-  "authors": [
-    "Chris Fritz"
-  ],
+  "homepage": "https://github.com/SensorUp/su-sortable-tree-theme",
   "license": "MIT",
   "jest": {
     "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",
