@@ -1,55 +1,21 @@
-import React, { Component } from 'react';
-import SortableTree, { toggleExpandedForAll } from 'react-sortable-tree';
-import FileExplorerTheme from '../index';
-import './app.css';
+import React, { Component } from "react";
+import SortableTree, { toggleExpandedForAll } from "react-sortable-tree";
+import CustomTheme from "../index";
+import "./app.css";
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      searchString: '',
+      searchString: "",
       searchFocusIndex: 0,
       searchFoundCount: null,
       treeData: [
-        { title: '.gitignore' },
-        { title: 'package.json' },
-        {
-          title: 'src',
-          isDirectory: true,
-          expanded: true,
-          children: [
-            { title: 'styles.css' },
-            { title: 'index.js' },
-            { title: 'reducers.js' },
-            { title: 'actions.js' },
-            { title: 'utils.js' },
-          ],
-        },
-        {
-          title: 'tmp',
-          isDirectory: true,
-          children: [
-            { title: '12214124-log' },
-            { title: 'drag-disabled-file', dragDisabled: true },
-          ],
-        },
-        {
-          title: 'build',
-          isDirectory: true,
-          children: [{ title: 'react-sortable-tree.js' }],
-        },
-        {
-          title: 'public',
-          isDirectory: true,
-        },
-        {
-          title: 'node_modules',
-          isDirectory: true,
-        },
+        { title: "main", subtitle: "sub" },
+        { title: "value2", expanded: true, children: [{ title: "value3" }] },
       ],
     };
-
     this.updateTreeData = this.updateTreeData.bind(this);
     this.expandAll = this.expandAll.bind(this);
     this.collapseAll = this.collapseAll.bind(this);
@@ -86,13 +52,15 @@ class App extends Component {
 
     const alertNodeInfo = ({ node, path, treeIndex }) => {
       const objectString = Object.keys(node)
-        .map(k => (k === 'children' ? 'children: Array' : `${k}: '${node[k]}'`))
-        .join(',\n   ');
+        .map((k) =>
+          k === "children" ? "children: Array" : `${k}: '${node[k]}'`
+        )
+        .join(",\n   ");
 
       global.alert(
-        'Info passed to the icon and button generators:\n\n' +
+        "Info passed to the icon and button generators:\n\n" +
           `node: {\n   ${objectString}\n},\n` +
-          `path: [${path.join(', ')}],\n` +
+          `path: [${path.join(", ")}],\n` +
           `treeIndex: ${treeIndex}`
       );
     };
@@ -115,16 +83,16 @@ class App extends Component {
 
     return (
       <div
-        style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}
+        style={{ display: "flex", flexDirection: "column", height: "100vh" }}
       >
-        <div style={{ flex: '0 0 auto', padding: '0 15px' }}>
-          <h3>File Explorer Theme</h3>
+        <div style={{ flex: "0 0 auto", padding: "0 15px" }}>
+          <h3>Full Node Drag Theme</h3>
           <button onClick={this.expandAll}>Expand All</button>
           <button onClick={this.collapseAll}>Collapse All</button>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <form
-            style={{ display: 'inline-block' }}
-            onSubmit={event => {
+            style={{ display: "inline-block" }}
+            onSubmit={(event) => {
               event.preventDefault();
             }}
           >
@@ -134,7 +102,7 @@ class App extends Component {
                 id="find-box"
                 type="text"
                 value={searchString}
-                onChange={event =>
+                onChange={(event) =>
                   this.setState({ searchString: event.target.value })
                 }
               />
@@ -165,72 +133,34 @@ class App extends Component {
           </form>
         </div>
 
-        <div style={{ flex: '1 0 50%', padding: '0 0 0 15px' }}>
+        <div style={{ flex: "1 0 50%", padding: "0 0 0 15px" }}>
           <SortableTree
-            theme={FileExplorerTheme}
+            theme={CustomTheme}
             treeData={treeData}
             onChange={this.updateTreeData}
             searchQuery={searchString}
             searchFocusOffset={searchFocusIndex}
-            searchFinishCallback={matches =>
+            searchFinishCallback={(matches) =>
               this.setState({
                 searchFoundCount: matches.length,
                 searchFocusIndex:
                   matches.length > 0 ? searchFocusIndex % matches.length : 0,
               })
             }
+            rowHeight={42}
             canDrag={({ node }) => !node.dragDisabled}
-            canDrop={({ nextParent }) => !nextParent || nextParent.isDirectory}
-            generateNodeProps={rowInfo => ({
-              icons: rowInfo.node.isDirectory
-                ? [
-                    <div
-                      style={{
-                        borderLeft: 'solid 8px gray',
-                        borderBottom: 'solid 10px gray',
-                        marginRight: 10,
-                        boxSizing: 'border-box',
-                        width: 16,
-                        height: 12,
-                        filter: rowInfo.node.expanded
-                          ? 'drop-shadow(1px 0 0 gray) drop-shadow(0 1px 0 gray) drop-shadow(0 -1px 0 gray) drop-shadow(-1px 0 0 gray)'
-                          : 'none',
-                        borderColor: rowInfo.node.expanded ? 'white' : 'gray',
-                      }}
-                    />,
-                  ]
-                : [
-                    <div
-                      style={{
-                        border: 'solid 1px black',
-                        fontSize: 8,
-                        textAlign: 'center',
-                        marginRight: 10,
-                        width: 12,
-                        height: 16,
-                      }}
-                    >
-                      F
-                    </div>,
-                  ],
-              buttons: [
-                <button
-                  style={{
-                    padding: 0,
-                    borderRadius: '100%',
-                    backgroundColor: 'gray',
-                    color: 'white',
-                    width: 16,
-                    height: 16,
-                    border: 0,
-                    fontWeight: 100,
-                  }}
-                  onClick={() => alertNodeInfo(rowInfo)}
-                >
-                  i
-                </button>,
-              ],
-            })}
+            generateNodeProps={(rowInfo) => {
+              return {
+                buttons: [
+                  <button onClick={() => alertNodeInfo(rowInfo)}>i</button>,
+                ],
+                style: {
+                  borderLeft: "3px solid rgb(25, 145, 234)",
+                  color: "rgb(25, 145, 234)",
+                  backgroundColor: "rgb(243, 243, 243)",
+                },
+              };
+            }}
           />
         </div>
       </div>

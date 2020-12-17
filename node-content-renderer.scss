@@ -1,10 +1,15 @@
+$row-padding: 2px;
+$hover-padding: 3px;
+
 .rowWrapper {
+  padding: $row-padding $row-padding $row-padding 0;
   height: 100%;
   box-sizing: border-box;
   cursor: move;
 
   &:hover {
     opacity: 0.7;
+    padding: $hover-padding $hover-padding $hover-padding 0;
   }
 
   &:active {
@@ -14,13 +19,15 @@
 
 .rowWrapperDragDisabled {
   cursor: default;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .row {
   height: 100%;
   white-space: nowrap;
   display: flex;
-  position: relative;
 
   & > * {
     box-sizing: border-box;
@@ -31,24 +38,24 @@
  * The outline of where the element will go if dropped, displayed while dragging
  */
 .rowLandingPad {
-  border: none;
-  box-shadow: none;
-  outline: none;
-
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  width: 100%;
   * {
     opacity: 0 !important;
   }
 
   &::before {
     background-color: lightblue;
-    border: 2px dotted black;
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     z-index: -1;
+    width: 100%;
   }
 }
 
@@ -67,14 +74,14 @@
  * Nodes matching the search conditions are highlighted
  */
 .rowSearchMatch {
-  box-shadow: inset 0 -7px 7px -3px #0080ff;
+  outline: solid 1px #0080ff;
 }
 
 /**
  * The node that matches the search conditions and is currently focused
  */
 .rowSearchFocus {
-  box-shadow: inset 0 -7px 7px -3px #fc6421;
+  outline: solid 1px #fc6421;
 }
 
 %rowItem {
@@ -86,7 +93,7 @@
   @extend %rowItem;
   position: relative;
   height: 100%;
-  flex: 1 0 auto;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -94,8 +101,9 @@
 
 .rowLabel {
   @extend %rowItem;
-  flex: 0 1 auto;
-  padding-right: 20px;
+  margin-left: 10px;
+  font-weight: normal;
+  font-size: 12px;
 }
 
 .rowToolbar {
@@ -106,192 +114,24 @@
 
 .toolbarButton {
   @extend %rowItem;
-}
-
-.collapseButton,
-.expandButton {
-  appearance: none;
-  border: none;
-  background: transparent;
-  padding: 0;
-  z-index: 2;
-  position: absolute;
-  top: 45%;
-  width: 30px;
-  height: 30px;
-  transform: translate3d(-50%, -50%, 0);
   cursor: pointer;
-
-  &::after {
-    content: '';
-    position: absolute;
-    transform-origin: 7px 4px;
-    transform: translate3d(-50%, -20%, 0);
-    border: solid transparent 10px;
-    border-left-width: 7px;
-    border-right-width: 7px;
-    border-top-color: gray;
-  }
-
-  &:hover::after {
-    border-top-color: black;
-  }
-
+  background: none;
+  border: none;
+  color: #9b9a9b;
   &:focus {
-    outline: none;
-
-    &::after {
-      filter: drop-shadow(0 0 1px #83bef9) drop-shadow(0 0 1px #83bef9)
-        drop-shadow(0 0 1px #83bef9);
-    }
+    outline: none !important;
   }
 }
 
-.expandButton::after {
-  transform: translate3d(-50%, -20%, 0) rotateZ(-90deg);
+.rowTitle {
+  font-weight: bold;
 }
 
-/**
- * Line for under a node with children
- */
-.lineChildren {
-  height: 100%;
-  display: inline-block;
+.rowTitleWithSubtitle {
+  display: block;
 }
 
-/* ==========================================================================
-   Scaffold
-
-    Line-overlaid blocks used for showing the tree structure
-   ========================================================================== */
-.lineBlock {
-  height: 100%;
-  position: relative;
-  display: inline-block;
-  flex: 0 0 auto;
-}
-
-.absoluteLineBlock {
-  @extend .lineBlock;
-  position: absolute;
-  top: 0;
-}
-
-/* Highlight line for pointing to dragged row destination
-   ========================================================================== */
-$highlight-color: #36c2f6;
-$highlight-line-size: 6px; // Make it an even number for clean rendering
-
-/**
- * +--+--+
- * |  |  |
- * |  |  |
- * |  |  |
- * +--+--+
- */
-.highlightLineVertical {
-  z-index: 3;
-
-  &::before {
-    position: absolute;
-    content: '';
-    background-color: $highlight-color;
-    width: $highlight-line-size;
-    margin-left: $highlight-line-size / -2;
-    left: 50%;
-    top: 0;
-    height: 100%;
-  }
-
-  @keyframes arrow-pulse {
-    $base-multiplier: 10;
-    0% {
-      transform: translate(0, 0);
-      opacity: 0;
-    }
-    30% {
-      transform: translate(0, 30% * $base-multiplier);
-      opacity: 1;
-    }
-    70% {
-      transform: translate(0, 70% * $base-multiplier);
-      opacity: 1;
-    }
-    100% {
-      transform: translate(0, 100% * $base-multiplier);
-      opacity: 0;
-    }
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    height: 0;
-    margin-left: -1 * $highlight-line-size / 2;
-    left: 50%;
-    top: 0;
-    border-left: $highlight-line-size / 2 solid transparent;
-    border-right: $highlight-line-size / 2 solid transparent;
-    border-top: $highlight-line-size / 2 solid white;
-    animation: arrow-pulse 1s infinite linear both;
-  }
-}
-
-/**
- * +-----+
- * |     |
- * |  +--+
- * |  |  |
- * +--+--+
- */
-.highlightTopLeftCorner {
-  &::before {
-    z-index: 3;
-    content: '';
-    position: absolute;
-    border-top: solid $highlight-line-size $highlight-color;
-    border-left: solid $highlight-line-size $highlight-color;
-    box-sizing: border-box;
-    height: calc(50% + #{$highlight-line-size / 2});
-    top: 50%;
-    margin-top: $highlight-line-size / -2;
-    right: 0;
-    width: calc(50% + #{$highlight-line-size / 2});
-  }
-}
-
-/**
- * +--+--+
- * |  |  |
- * |  |  |
- * |  +->|
- * +-----+
- */
-.highlightBottomLeftCorner {
-  $arrow-size: 7px;
-  z-index: 3;
-
-  &::before {
-    content: '';
-    position: absolute;
-    border-bottom: solid $highlight-line-size $highlight-color;
-    border-left: solid $highlight-line-size $highlight-color;
-    box-sizing: border-box;
-    height: calc(100% + #{$highlight-line-size / 2});
-    top: 0;
-    right: $arrow-size;
-    width: calc(50% - #{$arrow-size - ($highlight-line-size / 2)});
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    height: 0;
-    right: 0;
-    top: 100%;
-    margin-top: -1 * $arrow-size;
-    border-top: $arrow-size solid transparent;
-    border-bottom: $arrow-size solid transparent;
-    border-left: $arrow-size solid $highlight-color;
-  }
+.contentContainer {
+  display: flex;
+  flex-grow: 1;
 }

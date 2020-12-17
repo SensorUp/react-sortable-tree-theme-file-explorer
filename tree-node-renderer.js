@@ -1,67 +1,66 @@
-import React, { Component, Children, cloneElement } from 'react';
-import PropTypes from 'prop-types';
-import styles from './tree-node-renderer.scss';
+import React, { Children, cloneElement } from "react";
+import PropTypes from "prop-types";
+import styles from "./tree-node-renderer.scss";
 
-class FileThemeTreeNodeRenderer extends Component {
-  render() {
-    const {
-      children,
-      listIndex,
-      swapFrom,
-      swapLength,
-      swapDepth,
-      scaffoldBlockPxWidth,
-      lowerSiblingCounts,
-      connectDropTarget,
-      isOver,
-      draggedNode,
-      canDrop,
-      treeIndex,
-      treeId, // Delete from otherProps
-      getPrevRow, // Delete from otherProps
-      node, // Delete from otherProps
-      path, // Delete from otherProps
-      rowDirection,
-      ...otherProps
-    } = this.props;
+const SuCustomThemeTreeNodeRenderer = (props) => {
+  const {
+    children,
+    listIndex,
+    swapFrom,
+    swapLength,
+    swapDepth,
+    scaffoldBlockPxWidth,
+    lowerSiblingCounts,
+    connectDropTarget,
+    isOver,
+    draggedNode,
+    canDrop,
+    treeIndex,
+    treeId, // Delete from otherProps
+    getPrevRow, // Delete from otherProps
+    node, // Delete from otherProps
+    path, // Delete from otherProps
+    rowDirection,
+    ...otherProps
+  } = props;
 
-    return connectDropTarget(
-      <div {...otherProps} className={styles.node}>
-        {Children.map(children, child =>
-          cloneElement(child, {
-            isOver,
-            canDrop,
-            draggedNode,
-            lowerSiblingCounts,
-            listIndex,
-            swapFrom,
-            swapLength,
-            swapDepth,
-          })
-        )}
-      </div>
-    );
-  }
-}
+  return connectDropTarget(
+    <div {...otherProps} className={styles.node}>
+      {Children.map(children, (child) =>
+        cloneElement(child, {
+          isOver,
+          canDrop,
+          draggedNode,
+          lowerSiblingCounts,
+          listIndex,
+          swapFrom,
+          swapLength,
+          swapDepth,
+        })
+      )}
+    </div>
+  );
+};
 
-FileThemeTreeNodeRenderer.defaultProps = {
+SuCustomThemeTreeNodeRenderer.defaultProps = {
   swapFrom: null,
   swapDepth: null,
   swapLength: null,
   canDrop: false,
   draggedNode: null,
+  rowDirection: "ltr",
 };
 
-FileThemeTreeNodeRenderer.propTypes = {
+SuCustomThemeTreeNodeRenderer.propTypes = {
   treeIndex: PropTypes.number.isRequired,
-  treeId: PropTypes.string.isRequired,
   swapFrom: PropTypes.number,
   swapDepth: PropTypes.number,
   swapLength: PropTypes.number,
   scaffoldBlockPxWidth: PropTypes.number.isRequired,
   lowerSiblingCounts: PropTypes.arrayOf(PropTypes.number).isRequired,
-
+  treeId: PropTypes.string.isRequired,
   listIndex: PropTypes.number.isRequired,
+  rowDirection: PropTypes.string,
   children: PropTypes.node.isRequired,
 
   // Drop target
@@ -76,7 +75,6 @@ FileThemeTreeNodeRenderer.propTypes = {
   path: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   ).isRequired,
-  rowDirection: PropTypes.string.isRequired,
 };
 
-export default FileThemeTreeNodeRenderer;
+export default SuCustomThemeTreeNodeRenderer;
