@@ -149,18 +149,16 @@ class App extends Component {
             }
             rowHeight={42}
             canDrag={({ node }) => !node.dragDisabled}
-            generateNodeProps={(rowInfo) => {
-              return {
-                buttons: [
-                  <button onClick={() => alertNodeInfo(rowInfo)}>i</button>,
-                ],
-                style: {
-                  borderLeft: "3px solid rgb(25, 145, 234)",
-                  color: "rgb(25, 145, 234)",
-                  backgroundColor: "rgb(243, 243, 243)",
-                },
-              };
-            }}
+            generateNodeProps={(rowInfo) => ({
+              buttons: [
+                <button onClick={() => alertNodeInfo(rowInfo)}>i</button>,
+              ],
+              style: {
+                borderLeft: "3px solid rgb(25, 145, 234)",
+                color: "rgb(25, 145, 234)",
+                backgroundColor: "rgb(243, 243, 243)",
+              },
+            })}
           />
         </div>
       </div>

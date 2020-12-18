@@ -158,7 +158,6 @@ SuCustomThemeNodeContentRenderer.defaultProps = {
   isSearchMatch: false,
   parentNode: null,
   style: {},
-  subtitle: null,
   swapDepth: null,
   swapFrom: null,
   swapLength: null,
@@ -166,6 +165,7 @@ SuCustomThemeNodeContentRenderer.defaultProps = {
   toggleChildrenVisibility: null,
   lowerSiblingCounts: undefined,
   listIndex: undefined,
+  rowDirection: undefined,
 };
 
 SuCustomThemeNodeContentRenderer.propTypes = {
@@ -177,7 +177,13 @@ SuCustomThemeNodeContentRenderer.propTypes = {
   isSearchMatch: PropTypes.bool,
   listIndex: PropTypes.number,
   lowerSiblingCounts: PropTypes.arrayOf(PropTypes.number),
-  node: PropTypes.shape({}).isRequired,
+  node: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    children: PropTypes.shape({
+      length: PropTypes.number,
+    }),
+    expanded: PropTypes.bool,
+  }).isRequired,
   path: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   ).isRequired,
@@ -190,13 +196,14 @@ SuCustomThemeNodeContentRenderer.propTypes = {
   toggleChildrenVisibility: PropTypes.func,
   treeIndex: PropTypes.number.isRequired,
   treeId: PropTypes.string.isRequired,
+  rowDirection: PropTypes.string,
 
   // Drag and drop API functions
   // Drag source
   connectDragPreview: PropTypes.func.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   didDrop: PropTypes.bool.isRequired,
-  draggedNode: PropTypes.shape({}),
+  draggedNode: PropTypes.shape(),
   isDragging: PropTypes.bool.isRequired,
   parentNode: PropTypes.shape({}), // Needed for dndManager
   // Drop target
