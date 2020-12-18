@@ -179,9 +179,7 @@ SuCustomThemeNodeContentRenderer.propTypes = {
   lowerSiblingCounts: PropTypes.arrayOf(PropTypes.number),
   node: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    children: PropTypes.shape({
-      length: PropTypes.number,
-    }),
+    children: PropTypes.arrayOf(PropTypes.shape({})),
     expanded: PropTypes.bool,
   }).isRequired,
   path: PropTypes.arrayOf(
