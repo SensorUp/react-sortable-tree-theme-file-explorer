@@ -1,4 +1,12 @@
 .node {
-  min-width: 100%;
+  width: 50%;
+  white-space: nowrap;
   position: relative;
+  text-align: left;
+  min-width: 100%;
+  overflow: hidden;
+}
+
+.validDrop {
+  background: #26c281;
 }
