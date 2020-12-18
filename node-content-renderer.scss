@@ -118,6 +118,8 @@ $hover-padding: 3px;
   background: none;
   border: none;
   color: #9b9a9b;
+  align-items: center;
+  display: flex;
   &:focus {
     outline: none !important;
   }
