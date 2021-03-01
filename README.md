@@ -1,42 +1,28 @@
-# React Sortable Tree File Explorer Theme
+# SU Sortable Tree Theme
 
-![theme appearance](https://user-images.githubusercontent.com/4413963/32144463-a7de23e0-bcfc-11e7-8054-1a83d561261e.png)
-
-## Features
-
-- You can click anywhere on a node to drag it.
-- More compact design, with indentation alone used to represent tree depth.
+Forked from React Sortable Tree File Explorer Theme
+https://github.com/frontend-collective/react-sortable-tree-theme-file-explorer
 
 ## Usage
 
 ```sh
-npm install --save react-sortable-tree-theme-file-explorer
+yarn add @sensorup/su-sortable-tree-theme
 ```
 
 ```jsx
-import React, { Component } from 'react';
-import SortableTree from 'react-sortable-tree';
-import FileExplorerTheme from 'react-sortable-tree-theme-file-explorer';
+import React from "react";
+import SortableTree from "react-sortable-tree";
+import SuSortableTreeTheme from "@sensorup/su-sortable-tree-theme";
 
-export default class Tree extends Component {
-  constructor(props) {
-    super(props);
+const Tree = ({ treeData, onTreeChange }) => {
+  return (
+    <SortableTree
+      treeData={treeData}
+      onChange={onTreeChange}
+      theme={SuSortableTreeTheme}
+    />
+  );
+};
 
-    this.state = {
-      treeData: [{ title: 'src/', children: [{ title: 'index.js' }] }],
-    };
-  }
-
-  render() {
-    return (
-      <div style={{ height: 400 }}>
-        <SortableTree
-          treeData={this.state.treeData}
-          onChange={treeData => this.setState({ treeData })}
-          theme={FileExplorerTheme}
-        />
-      </div>
-    );
-  }
-}
+export default Tree;
 ```
